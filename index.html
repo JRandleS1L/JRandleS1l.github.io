@@ -177,7 +177,7 @@ map.on('load', () => {
     //     }
     // });
     map.addLayer({
-        'id': 'Figure_States_Available',
+        'id': 'Figure States Available',
         'type': 'fill',
         'source': 'licensed',
         'source-layer': 'stateData-6cnzix',
@@ -237,7 +237,7 @@ map.on('load', () => {
         }
     });
     map.addLayer({
-        'id': 'S1L_HELOC',
+        'id': 'S1L HELOC',
         'type': 'fill',
         'source': 'licensed',
         'source-layer': 'stateData-6cnzix',
@@ -282,11 +282,11 @@ map.on('load', () => {
 // After the last frame rendered before the map enters an "idle" state.
 map.on('idle', () => {
 // If these two layers were not added to the map, abort
-    if (!map.getLayer('Figure_States_Available') || !map.getLayer('S1L_HELOC')) {
+    if (!map.getLayer('Figure States Available') || !map.getLayer('S1L HELOC')) {
     return;
     }
 // Enumerate ids of the layers.
-    const toggleableLayerIds = ['Figure_States_Available', 'S1L_HELOC'];
+    const toggleableLayerIds = ['Figure States Available', 'S1L HELOC'];
  
 // Set up the corresponding toggle button for each layer.
     for (const id of toggleableLayerIds) {
