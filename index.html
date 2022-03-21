@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Product Map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<style>
+    #menu {
+    background: rgb(230, 25, 25);
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    border-radius: 3px;
+    width: 120px;
+    height: auto;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    font-family:  sans-serif;
+    }
+     
+    #menu a {
+    font-size: 13px;
+    color: #404040;
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    text-align: center;
+    }
+     
+    #menu a:last-child {
+    border: none;
+    }
+     
+    #menu a:hover {
+    background-color: #f8f8f8;
+    color: #404040;
+    }
+     
+    #menu a.active {
+    background-color: #3887be;
+    color: #ffffff;
+    }
+     
+    #menu a.active:hover {
+    background: #3074a4;
+    }
+</style>
+     
+<nav id="menu"></nav>
+<div id="map"></div>
+     
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoianJhbmRsZTIzIiwiYSI6ImNsMHF6OGpleTAxcHYzaW14cmhlYmV0NW8ifQ.nwvmbQK4yh2S2naCCLgckw'; 
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v10', 
+    center: [-95.71, 37.09],
+    zoom: 5
+ });
+map.on('load', () => {
+    map.addSource('branch_locations', {
+        type: 'vector',
+        url: 'mapbox://jrandle23.cl0q9kw673pnp28pclv7capq8-62qil'
+    });
+    map.addLayer({
+        'id': 'Branch_Locations',
+        'type': 'symbol',
+        'source': 'branch_locations',
+        'source-layer': 'branches',
+        'layout': {
+            'visibility': 'visible'
+            
+        },
+        'paint': {
+            'circle-radius': 8,
+            'circle-color': 'rgba(55,148,179,1)'
+        },
+    });
+    map.addSource('licensed', {
+        type: 'vector',
+        url: 'mapbox://jrandle23.4pchtixb'
+    });
+    map.addLayer({
+        'id': 'S1L_Licensed_States',
+        'type': 'fill',
+        'source': 'licensed',
+        'source-layer': 'stateData-6cnzix',
+        'layout': {
+            'visibility': 'visible'
+        },
+        'paint': {
+            'fill-color': [
+                'match',
+                ['get', 'name'],
+                [
+                    "Arizona",
+                    "Utah",
+                    "Colorado",
+                    "Idaho",
+                    "California",
+                    "Missouri",
+                    "Nevada",
+                    "Arkansas",
+                    "Florida",
+                    "Georgia",
+                    "Alabama",
+                    "Connecticut",
+                    "District of Columbia",
+                    "Delaware",
+                    "Texas",
+                    "Indiana",
+                    "Kansas",
+                    "Kentucky",
+                    "Massachusetts",
+                    "Louisiana",
+                    "Maryland",
+                    "Michigan",
+                    "Mississippi",
+                    "Minnesota",
+                    "New Jersey",
+                    "New Hampshire",
+                    "North Dakota",
+                    "Nebraska",
+                    "North Carolina",
+                    "Montana",
+                    "New Mexico",
+                    "Ohio",
+                    "Oklahoma",
+                    "South Carolina",
+                    "Virginia",
+                    "Oregon",
+                    "Hawaii",
+                    "Wyoming",
+                    "South Dakota",
+                    "Iowa",
+                    "Alaska",
+                    "Tennessee",
+                    "Wisconsin",
+                    "Illinois",
+                    "Washington"
+                ],
+                "hsl(285, 77%, 32%)",
+                "#000000"
+            ],
+            'fill-opacity': 0.25
+        }
+    });
+    map.addLayer({
+        'id': 'Figure_States_Available',
+        'type': 'fill',
+        'source': 'licensed',
+        'source-layer': 'stateData-6cnzix',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': [
+            'match',
+            ['get', 'name'],
+            [
+                "Arizona",
+                "Alabama",
+                "Alaska",
+                "Arkansas",
+                "California",
+                "Colorado",
+                "Connecticut",
+                "District of Columbia",
+                "Florida",
+                "Georgia",
+                "Indiana",
+                "Illinois",
+                "Iowa",
+                "Idaho",
+                "Kansas",
+                "Louisiana",
+                "Massachusetts",
+                "Maine",
+                "Michigan",
+                "Montana",
+                "Missouri",
+                "Mississippi",
+                "North Carolina",
+                "North Dakota",
+                "Nebraska",
+                "New Hampshire",
+                "New Jersey",
+                "New Mexico",
+                "Nevada",
+                "Ohio",
+                "Oklahoma",
+                "Oregon",
+                "Pennsylvania",
+                "Rhode Island",
+                "Tennessee",
+                "Virginia",
+                "Vermont",
+                "Washington",
+                "Wisconsin",
+                "Wyoming",
+            ],
+            'rgba(55,148,179,1)',
+            "#000000"
+        ],
+        'fill-opacity': 0.5
+        }
+    });
+    map.addLayer({
+        'id': 'S1L_HELOC',
+        'type': 'fill',
+        'source': 'licensed',
+        'source-layer': 'stateData-6cnzix',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'fill-color': [
+                "match",
+                ["get", "name"],
+            [
+                "Arizona",
+                "Colorado",
+                "California",
+                "Florida",
+                "Georgia",
+                "Indiana",
+                "Illinois",
+                "Idaho",
+                "Kansas",
+                "Massachusetts",
+                "Missouri",
+                "Minnesota",
+                "Michigan",
+                "Nebraska",
+                "New Mexico",
+                "Nevada",
+                "Ohio",
+                "Oklahoma",
+                "Oregon",
+                "Tennessee",
+                "Washington"
+
+            ],
+            "hsl(98, 93%, 50%)",
+            "#000000"
+        ],
+        'fill-opacity': 0.3
+        }
+    });
+});
+// After the last frame rendered before the map enters an "idle" state.
+map.on('idle', () => {
+// If these two layers were not added to the map, abort
+    if (!map.getLayer('Branch_Locations') || !map.getLayer('S1L_Licensed_States') || !map.getLayer('Figure_States_Available') || !map.getLayer('S1Ln HELOC')) {
+    return;
+    }
+// Enumerate ids of the layers.
+    const toggleableLayerIds = ['Branch_Locations', 'S1L_Licensed_States', 'Figure_States_Available', 'S1L_HELOC'];
+ 
+// Set up the corresponding toggle button for each layer.
+    for (const id of toggleableLayerIds) {
+// Skip layers that already have a button set up.
+        if (document.getElementById(id)) {
+            continue;
+        }
+
+// Create a link.
+        const link = document.createElement('a');
+        link.id = id;
+        link.href = '#';
+        link.textContent = id;
+        link.className = 'active';
+ 
+// Show or hide layer when the toggle is clicked.
+    link.onclick = function (e) {
+        const clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
+ 
+        const visibility = map.getLayoutProperty(
+            clickedLayer,
+            'visibility'
+        );
+ 
+// Toggle layer visibility by changing the layout object's visibility property.
+        if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+        } else {
+            this.className = 'active';
+            map.setLayoutProperty(
+                clickedLayer,
+                'visibility',
+                'visible'
+                );
+            }
+        };
+        const layers = document.getElementById('menu');
+        layers.appendChild(link);
+        }
+    });
+ 
+
+    </script>
+
+   
+
+</body>
+</html>
