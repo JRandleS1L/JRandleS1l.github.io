@@ -14,13 +14,13 @@ body { margin: 0; padding: 0; }
 <body>
 <style>
     #menu {
-    background: rgb(230, 25, 25);
+    background: #3887be;
     position: absolute;
     z-index: 1;
     top: 10px;
     right: 10px;
     border-radius: 3px;
-    width: 120px;
+    width: auto;
     height: auto;
     border: 1px solid rgba(0, 0, 0, 0.4);
     font-family:  sans-serif;
@@ -28,7 +28,7 @@ body { margin: 0; padding: 0; }
      
     #menu a {
     font-size: 13px;
-    color: #404040;
+    color: #ffffff;
     display: block;
     margin: 0;
     padding: 0;
@@ -48,7 +48,7 @@ body { margin: 0; padding: 0; }
     }
      
     #menu a.active {
-    background-color: #3887be;
+    background-color: rgb(230, 25, 25);
     color: #ffffff;
     }
      
@@ -62,101 +62,120 @@ body { margin: 0; padding: 0; }
      
 
 <script>
+// import `mapbox-gl/dist/mapbox-gl.css`
+
 mapboxgl.accessToken = 'pk.eyJ1IjoianJhbmRsZTIzIiwiYSI6ImNsMHF6OGpleTAxcHYzaW14cmhlYmV0NW8ifQ.nwvmbQK4yh2S2naCCLgckw'; 
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v10', 
+    style: 'mapbox://styles/jrandle23/cl0qc1h6s003415nwps4anjry', 
     center: [-95.71, 37.09],
     zoom: 5
  });
+map.on('click', (event) => {
+    const features = map.queryRenderedFeatures(event.point, {
+    layers: ['branch-locations']
+    });
+    if (!features.length) {
+        return;
+    }
+    const feature = features[0];
+ 
+    const popup = new mapboxgl.Popup({ offset: [0, -15] })
+    .setLngLat(feature.geometry.coordinates)
+    .setHTML(
+    `<h3>${feature.properties.CostCenter}</h3><p>${feature.properties.BranchManager}</p>`
+    )
+    .addTo(map);
+});
 map.on('load', () => {
-    map.addSource('branch_locations', {
-        type: 'vector',
-        url: 'mapbox://jrandle23.cl0q9kw673pnp28pclv7capq8-62qil'
-    });
-    map.addLayer({
-        'id': 'Branch_Locations',
-        'type': 'symbol',
-        'source': 'branch_locations',
-        'source-layer': 'branches',
-        'layout': {
-            'visibility': 'visible'
+    // map.addSource('branch_locations', {
+    //     type: 'vector',
+    //     url: 'mapbox://jrandle23.cl0q9kw673pnp28pclv7capq8-62qil'
+    // });
+    // map.addLayer({
+    //     'id': 'Branch_Locations',
+    //     'type': 'symbol',
+    //     'source': 'branch_locations',
+    //     'source-layer': 'branches',
+    //     'layout': {
+    //         'visibility': 'visible',
+    //         'icon-image':'sprite_images/mapbox-marker-icon-red.svg',
+    //         'icon-allow-overlap': true,
+    //         'icon-size': 0.5,
+    //         "text-field": ["step", ["zoom"], "", 22, ""]
             
-        },
-        'paint': {
-            'circle-radius': 8,
-            'circle-color': 'rgba(55,148,179,1)'
-        },
-    });
+    //     },
+    //     'paint': {}
+    // });
     map.addSource('licensed', {
         type: 'vector',
         url: 'mapbox://jrandle23.4pchtixb'
     });
-    map.addLayer({
-        'id': 'S1L_Licensed_States',
-        'type': 'fill',
-        'source': 'licensed',
-        'source-layer': 'stateData-6cnzix',
-        'layout': {
-            'visibility': 'visible'
-        },
-        'paint': {
-            'fill-color': [
-                'match',
-                ['get', 'name'],
-                [
-                    "Arizona",
-                    "Utah",
-                    "Colorado",
-                    "Idaho",
-                    "California",
-                    "Missouri",
-                    "Nevada",
-                    "Arkansas",
-                    "Florida",
-                    "Georgia",
-                    "Alabama",
-                    "Connecticut",
-                    "District of Columbia",
-                    "Delaware",
-                    "Texas",
-                    "Indiana",
-                    "Kansas",
-                    "Kentucky",
-                    "Massachusetts",
-                    "Louisiana",
-                    "Maryland",
-                    "Michigan",
-                    "Mississippi",
-                    "Minnesota",
-                    "New Jersey",
-                    "New Hampshire",
-                    "North Dakota",
-                    "Nebraska",
-                    "North Carolina",
-                    "Montana",
-                    "New Mexico",
-                    "Ohio",
-                    "Oklahoma",
-                    "South Carolina",
-                    "Virginia",
-                    "Oregon",
-                    "Hawaii",
-                    "Wyoming",
-                    "South Dakota",
-                    "Iowa",
-                    "Alaska",
-                    "Tennessee",
-                    "Wisconsin",
-                    "Illinois",
-                    "Washington"
-                ],
-                "hsl(285, 77%, 32%)",
-                "#000000"
-            ],
-            'fill-opacity': 0.25
-        }
-    });
+    // map.addLayer({
+    //     'id': 'S1L_Licensed_States',
+    //     'type': 'fill',
+    //     'source': 'licensed',
+    //     'source-layer': 'stateData-6cnzix',
+    //     'layout': {
+    //         'visibility': 'visible'
+    //     },
+    //     'paint': {
+    //         'fill-color': [
+    //             'match',
+    //             ['get', 'name'],
+    //             [
+    //                 "Arizona",
+    //                 "Utah",
+    //                 "Colorado",
+    //                 "Idaho",
+    //                 "California",
+    //                 "Missouri",
+    //                 "Nevada",
+    //                 "Arkansas",
+    //                 "Florida",
+    //                 "Georgia",
+    //                 "Alabama",
+    //                 "Connecticut",
+    //                 "District of Columbia",
+    //                 "Delaware",
+    //                 "Texas",
+    //                 "Indiana",
+    //                 "Kansas",
+    //                 "Kentucky",
+    //                 "Massachusetts",
+    //                 "Louisiana",
+    //                 "Maryland",
+    //                 "Michigan",
+    //                 "Mississippi",
+    //                 "Minnesota",
+    //                 "New Jersey",
+    //                 "New Hampshire",
+    //                 "North Dakota",
+    //                 "Nebraska",
+    //                 "North Carolina",
+    //                 "Montana",
+    //                 "New Mexico",
+    //                 "Ohio",
+    //                 "Oklahoma",
+    //                 "South Carolina",
+    //                 "Virginia",
+    //                 "Oregon",
+    //                 "Hawaii",
+    //                 "Wyoming",
+    //                 "South Dakota",
+    //                 "Iowa",
+    //                 "Alaska",
+    //                 "Tennessee",
+    //                 "Wisconsin",
+    //                 "Illinois",
+    //                 "Washington"
+    //             ],
+    //             "hsl(285, 77%, 32%)",
+    //             "#000000"
+    //         ],
+    //         'fill-opacity': 0.25
+    //     }
+    // });
     map.addLayer({
         'id': 'Figure_States_Available',
         'type': 'fill',
@@ -211,10 +230,10 @@ map.on('load', () => {
                 "Wisconsin",
                 "Wyoming",
             ],
-            'rgba(55,148,179,1)',
+            "hsl(36, 93%, 50%)",
             "#000000"
         ],
-        'fill-opacity': 0.5
+        'fill-opacity': 0.35
         }
     });
     map.addLayer({
@@ -226,7 +245,7 @@ map.on('load', () => {
             'visibility': 'none'
         },
         'paint': {
-            'fill-color': [
+            'fill-pattern': [
                 "match",
                 ["get", "name"],
             [
@@ -253,21 +272,21 @@ map.on('load', () => {
                 "Washington"
 
             ],
-            "hsl(98, 93%, 50%)",
-            "#000000"
+            "polka-dots",
+            ""
         ],
-        'fill-opacity': 0.3
+        'fill-opacity': 0.5
         }
     });
 });
 // After the last frame rendered before the map enters an "idle" state.
 map.on('idle', () => {
 // If these two layers were not added to the map, abort
-    if (!map.getLayer('Branch_Locations') || !map.getLayer('S1L_Licensed_States') || !map.getLayer('Figure_States_Available') || !map.getLayer('S1Ln HELOC')) {
+    if (!map.getLayer('Figure_States_Available') || !map.getLayer('S1L_HELOC')) {
     return;
     }
 // Enumerate ids of the layers.
-    const toggleableLayerIds = ['Branch_Locations', 'S1L_Licensed_States', 'Figure_States_Available', 'S1L_HELOC'];
+    const toggleableLayerIds = ['Figure_States_Available', 'S1L_HELOC'];
  
 // Set up the corresponding toggle button for each layer.
     for (const id of toggleableLayerIds) {
@@ -281,7 +300,7 @@ map.on('idle', () => {
         link.id = id;
         link.href = '#';
         link.textContent = id;
-        link.className = 'active';
+        link.className = '';
  
 // Show or hide layer when the toggle is clicked.
     link.onclick = function (e) {
